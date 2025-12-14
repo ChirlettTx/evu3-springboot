@@ -14,10 +14,6 @@ public class PracticaService {
         this.repo = repo;
     }
 
-    public Practica agregar(Practica p) {
-        return repo.save(p);
-    }
-
     public List<Practica> listar() {
         return repo.findAll();
     }
@@ -27,7 +23,8 @@ public class PracticaService {
     }
 
     public Practica actualizar(Long id, Practica nueva) {
-        Practica p = repo.findById(id).orElseThrow();
+        Practica p = repo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Práctica no encontrada"));
         p.setEmpresa(nueva.getEmpresa());
         p.setDireccion(nueva.getDireccion());
         p.setTelefono(nueva.getTelefono());
@@ -36,6 +33,10 @@ public class PracticaService {
         p.setFechaInicio(nueva.getFechaInicio());
         p.setFechaTermino(nueva.getFechaTermino());
         p.setDescripcion(nueva.getDescripcion());
+
+        p.setEstudiante(nueva.getEstudiante());
+        p.setProfesor(nueva.getProfesor());
+
         return repo.save(p);
     }
 
